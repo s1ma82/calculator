@@ -12,12 +12,18 @@ const Calculator = () => {
     function enter(value){
         const exp = [...[inputValue], ...[value]].join('')
         if(typeof value === 'string' && value !== "."){
-            if(operator) return
+            if(operator && String(inputValue).length > 1) {
+                const newValue = String(inputValue).slice(0, String(inputValue).length - 1)
+                return setInputValue(newValue + value)
+            }else if(String(inputValue).slice(-1) === '-' || String(inputValue).slice(-1) === "."){
+                return
+            }
             if(!inputValue) {
                 if(value !== "-") return 
                 setOperator(true)
                 return setInputValue(value)
             }
+            setDot(false)
             setOperator(true)
         }else{
             if(!inputValue) return setInputValue(value)
